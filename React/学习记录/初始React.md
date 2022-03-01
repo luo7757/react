@@ -21,3 +21,21 @@ JS 的扩展语法，不是官方支持的语法 ，需要用babel进行转义
 ```
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 ```
+## 使用脚手架搭建项目
+npx create-react-app 项目名称
+创建后 和 vue 差距不大
+
+官方：create-react-app
+三方：umi等
+
+## VScode 配置
+设置中 emmet 的 语言包含中 添加Javascriptreact 以支持 在js中编写html
+
+## Vscode 插件安装
+- ESLint：代码检查（为什么要重新安装这个，脚手架安转的只有在运行时才会报错，vscode 的插件书写时就会报错）
+- ES7 Reatc/Redux/GraphQL/Reatc-Native snippets：快速代码编写
+
+
+## chrome插件安装
+
+React Developer Tools
