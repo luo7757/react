@@ -1,23 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// 有时需求必须要有两个根节点 一般是加一个div作为根节点
-// 但有时还不能有真实元素作为根节点 可以使用一个空的节点<></> ,这是一个语法糖 ，真实的写法是下面那种 如下
-// React.Fragment 代表一个片段 在虚拟dom中表示为symbel
-const h1 = (
-  <>
-    <h1>Hello, World</h1>
-    <span>一个span元素</span>
-  </>
-)
-console.log(h1);
-// const h1 = (
-//   <React.Fragment> 
-//     <h1>Hello, World</h1>
-//     <span>一个span元素</span>
-//   </React.Fragment>
+let num = 1;
+// const div = (
+//   <div title='wc'>
+//     {num}
+//   </div>
 // )
+setInterval(() => {
+  num ++;
+  const div = (
+    <div>{num}</div>
+  )
+  // 注意这里并没有 生产一个真正的don元素
+  // 生成的是一个 jsx 虚拟dom对象
+  // 在react中 对于 jsx 虚拟dom发生改变时，react 会仅修改在 虚拟dom树中对应的元素的 数据
+  // 真实的dom 并不一定会删除重新创建 可能只是操作该真实dom 修改对应的属性
+  ReactDOM.render(div,document.getElementById('root'));
+},1000)
+// jsx元素 一旦生成就不可变了 所有的信息都不可变
+// console.log(div)
+// div.props.children = 2;
+// div.props.title = "测试"
+// 要变就只能重新生成一个元素 来重新渲染
+// 使用 Object.freeze() 来冻结 jsx 对象
 
-ReactDOM.render(h1,
-  document.getElementById('root')
-);
+// ReactDOM.render(div,document.getElementById('root'));
