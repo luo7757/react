@@ -1,16 +1,18 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+import { Students } from "./Students";
 
-import { MyFuncComp } from './MyFuncComp';
-import { MyClassComp } from './MyClassComp';
+const appkey = "luoshiyan_1622205899022";
+const url = "https://open.duyiedu.com/api/student/findAll";
 
-let dom = document.getElementById('root');
-
-// 传递的属性 可以是任何数据
-ReactDOM.render(<div>
-  <MyFuncComp number={6}/>
-  <MyFuncComp number="4"/>
-  <MyClassComp number="5"/>
-  <MyClassComp ennabel ui={<h2>这是一个h2 react元素</h2>}/>
-  <MyClassComp obj={{name: "派大星", age: 30}}/>
-</div>, dom)
+async function fetchAllStudents(){
+  const result = await fetch(`${url}?appkey=${appkey}`).then((res) => res.json())
+  .then(res => res.data);
+  return result;
+}
+async function renderStudents(){
+  const list = await fetchAllStudents();
+  console.log(list)
+  ReactDOM.render(<Students list={list}/>, document.getElementById("root"))
+}
+renderStudents();
