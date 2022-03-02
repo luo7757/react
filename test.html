@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+  <!-- React核心库， 于宿主环境无关 -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <!-- 依赖核心库，将核心的功能与页面结合 -->
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <!-- JSX 转义使用babel -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script>
+    // react-dom.development.js 提供了一个 ReactDOM 对象 里面有个函数 render 函数
+    // ReactDOM.render(显示的东西，容器)
+
+    // 创建一个 H1 元素
+    let span = React.createElement('span',{},"一个span")
+
+    let h1 = React.createElement('h1',{
+      title:"第一个React元素"
+    },"Hollo,World","你好",span)
+    // ReactDOM.render("hollo,world", document.getElementById("root"))
+    ReactDOM.render(h1, document.getElementById("root"))
+  </script>
+</body>
+</html>
