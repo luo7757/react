@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-// import {Ball} from './component/Ball';
-import { BallList } from './component/BallList'
 
-const dom = document.getElementById('root'); 
+import { Pager } from './component/TestPager/index';
+const dom = document.getElementById('root');
 
-ReactDOM.render(<BallList />, dom)
+ReactDOM.render(<Pager />, dom)

@@ -1,0 +1,20 @@
+.pager{
+  height: 30px;
+}
+.page{
+  height: 30px;
+  padding: 5px;
+  border: 1px solid rgb(107, 104, 104);
+  margin: 0 5px;
+  color: fuchsia;
+  cursor: pointer;
+  user-select: none;
+}
+.disable{
+  color: gray;
+  cursor: not-allowed;
+}
+.active{
+  border: none;
+  color: red;
+}
