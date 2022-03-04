@@ -1,7 +1,4 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-
-import { Pager } from './component/TestPager/index';
-const dom = document.getElementById('root');
-
-ReactDOM.render(<Pager />, dom)
+import {Comp} from './Comp';
+ReactDOM.render(<Comp/>, document.getElementById("root"));
