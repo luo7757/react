@@ -51,6 +51,9 @@ export class Comp extends Component{
       return {
         n: cur.n + 1
       }
+    },() => {
+      // 这个函数会在所有状态修改完成后再运行
+      console.log(this.state.n)
     })
     this.setState(cur => {
       return {
