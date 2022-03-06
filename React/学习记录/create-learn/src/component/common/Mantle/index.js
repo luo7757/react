@@ -26,7 +26,7 @@ export default function Mantle(props){
     // 显示
     return (
       <div className='mantle-container' onClick={(e) => {
-        if(e.target.className === "mantle-content"){
+        if(e.target.className !== "mantle-container"){
           return;
         }
         props.bgClose && props.bgClose()
@@ -41,7 +41,7 @@ export default function Mantle(props){
               options.content
             }
           </div>
-          <div className='mantle-close' onClick={props.btnClose}>
+          <div className='mantle-btnClose' onClick={() => options.btnClose && options.btnClose()}>
           {
             options.closeContent
           }

@@ -16,7 +16,7 @@
   align-items: center;
   flex-direction: column;
 }
-.mantle-close{
+.mantle-btnClose{
   align-self: flex-end;
   padding: 10px;
   margin-right: 20px;
