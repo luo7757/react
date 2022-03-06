@@ -1,4 +1,13 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import {Comp} from './Comp';
-ReactDOM.render(<Comp/>, document.getElementById("root"));
+
+class A {
+  render(){
+    return null;
+  }
+}
+ReactDOM.render((<div>
+  <A />
+  <A />
+  <A />
+</div>))
