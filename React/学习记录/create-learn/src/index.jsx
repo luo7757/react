@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 
-class A {
-  render(){
-    return null;
-  }
-}
-ReactDOM.render((<div>
-  <A />
-  <A />
-  <A />
-</div>))
+import Comp from './Comp';
+
+
+ReactDOM.render(
+//<Comp div={<div>卧槽</div>}/>, 
+<Comp div={<div>props属性</div>}>
+  <div>children属性</div>
+</Comp>,
+document.getElementById('root')
+)
