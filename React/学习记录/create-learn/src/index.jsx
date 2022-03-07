@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import Mantle from './component/mantleTest';
+import App from './app';
 
 
-ReactDOM.render(<Mantle />,document.getElementById("root"))
+ReactDOM.render(<App />,document.getElementById("root"))
