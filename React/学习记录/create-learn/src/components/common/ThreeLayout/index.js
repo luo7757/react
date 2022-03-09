@@ -42,6 +42,7 @@ ThreeLayout.defaultOptions = {
   rightWidth: 200,
 }
 // 函数属性约束
+
 ThreeLayout.propTypes = {
   minMainWidth: PropTypes.number,
   leftWidth: PropTypes.number,
