@@ -1,5 +1,8 @@
 import React from "react";
 import './index.css';
+import Types from '../../utils/commonTypes.js';
+import PropTypes from 'prop-types';
+
 
 /**
  * 
@@ -12,29 +15,37 @@ import './index.css';
  * @returns 
  */
 export default function ThreeLayout(props){
-  const defaultOptions = {
-    minMainWidth: 800,
-    leftWidth: 200,
-    rightWidth: 200,
-  }
-  let options = Object.assign({}, defaultOptions, props)
   return (
   <div className="threeLayout-container">
     <div className="threeLayout-main" style={{
-      width: options.main && options.minMainWidth
+      width: props.main && props.minMainWidth
     }}>
-      {options.main || options.children}
+      {props.main || props.children}
     </div>
     <div className="threeLayout-left" style={{
-      width: options.left && options.leftWidth
+      width: props.left && props.leftWidth
     }}>
-      {options.left}
+      {props.left}
     </div>
     <div className="threeLayout-right" style={{
-      width: options.right && options.rightWidth
+      width: props.right && props.rightWidth
     }}>
-      {options.right}
+      {props.right}
     </div>
   </div>
   )
+}
+// 函数默认值
+ThreeLayout.defaultOptions = {
+  minMainWidth: 800,
+  leftWidth: 200,
+  rightWidth: 200,
+}
+// 函数属性约束
+ThreeLayout.propTypes = {
+  minMainWidth: PropTypes.number,
+  leftWidth: PropTypes.number,
+  rightWidth: PropTypes.number,
+  main: Types.children,
+  children: Types.children,
 }

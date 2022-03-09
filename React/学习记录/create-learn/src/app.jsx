@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import CheckBoxGroup from "./component/common/CheckBoxGroup";
-import { getStudents } from "./component/getData";
-
-// import ThreeLayout from './component/common/ThreeLayout';
+// import Test from './components/common/CheckBoxGroup/test';
+// import ThreeLayout from './components/common/ThreeLayout';
+import RadioBoxGroup from "./components/common/RadioBoxGroup/test";
+// import Select from "./components/common/Select/test";
 
 export default class App extends Component{
-  state = {
-    students: []
-  }
-
-  async componentDidMount(){
-    const data = await getStudents();
-    console.log(data)
-    this.setState({
-      students: data
-    })
-  }
-
   render(){
     return (
       // <div className="app-container" style={{
@@ -27,7 +15,9 @@ export default class App extends Component{
       //   </ThreeLayout>
       // </div>
       <div>
-        <CheckBoxGroup data={this.state.students}></CheckBoxGroup>
+        {/* <Test /> */}
+        <RadioBoxGroup />
+        {/* <Select /> */}
       </div>
     )
   }
