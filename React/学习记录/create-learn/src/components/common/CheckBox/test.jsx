@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CheckBoxGroup from "./index"
+import CheckBoxs from "./index"
 import { getStudents } from '../../getData';
 
 export default class Test extends Component {
@@ -15,20 +15,15 @@ export default class Test extends Component {
             datas: stus.map(it => ({ value: it.id.toString(), text: it.name }))
         })
     }
-
-    
+    componentDidUpdate = () => {
+        console.log(this.state.chooseDatas)
+    }
     render() {
         return (
             <div>
-                <CheckBoxGroup
-                    name="loves"
-                    {...this.state}
-                    onChange={newArr => {
-                        this.setState({
-                            chooseDatas: newArr
-                        })
-                    }}
-                />
+               <CheckBoxs name="test" {...this.state} onChange={newArr => this.setState({
+                   chooseDatas: newArr
+               })}></CheckBoxs>
             </div>
         )
     }

@@ -1,33 +1,30 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Types from '../../utils/commonTypes.js';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Types from "../../utils/commonTypes.js";
+import withDataGroup from "../../HOC/withDatasGroup.jsx";
 
-export default class RadioBoxGroup extends Component {
+class RadioBox extends Component {
   static propTypes = {
-    datas: Types.grounpDatas,
-    onClick: PropTypes.func,
+    onClick: Types.func,
     name: PropTypes.string,
     choose: PropTypes.string,
-  }
-
-  createdDOM = () => {
-    console.log(this.props)
-    return this.props.datas.map(it => <label key={it.value}>
-      <input onChange={this.props.onClick} 
-      name={this.props.name}
-      checked={this.props.choose === it.value}
-      type="radio"
-      value={it.value}
-      />
-      {it.text}
-    </label>)
-  }
+    info: Types.info.isRequired,
+  };
 
   render() {
-    const dom = this.createdDOM();
-    // console.log(dom)
     return (
-      <div>{dom}</div>
-    )
+      <label>
+        <input
+          onChange={this.props.onClick}
+          name={this.props.name}
+          checked={this.props.choose === this.props.info.value}
+          type="radio"
+          value={this.props.info.value}
+        />
+        {this.props.info.text}
+      </label>
+    );
   }
 }
+
+export default withDataGroup(RadioBox);

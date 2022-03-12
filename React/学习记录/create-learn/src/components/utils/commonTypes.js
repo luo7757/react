@@ -7,5 +7,11 @@ export default {
     value: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   })),
-  chooseDatas: PropTypes.arrayOf(PropTypes.string)
+  chooseDatas: PropTypes.arrayOf(PropTypes.string),
+  info: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+  }),
+  func: PropTypes.func,
+  choose: PropTypes.string
 }

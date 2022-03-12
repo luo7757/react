@@ -25,7 +25,7 @@ export default class test extends Component {
 
   render() {
     return (
-      <Select datas={this.state.datas} onChange={(e) => this.getChoose(e)}/>
+      <Select choose={this.state.choose} datas={this.state.datas} onChange={(e) => this.getChoose(e)}/>
     )
   }
 }
