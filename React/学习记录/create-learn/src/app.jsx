@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import TaskList from './components/common/TaskList';
+import Test from './components/common/Test.js';
 
 export default class app extends Component {
   render() {
     return (
       <div>
-        <TaskList />
+        <Test></Test>
       </div>
     )
   }
