@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Form from './components/common/Form/test';
+import TaskList from './components/common/TaskList';
+
 export default class app extends Component {
   render() {
     return (
       <div>
-        <Form />
+        <TaskList />
       </div>
     )
   }
