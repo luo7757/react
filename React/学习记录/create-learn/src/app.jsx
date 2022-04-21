@@ -1,19 +1,11 @@
 import React, { Component, useState, useEffect } from 'react'
-
+import { useAllStudents } from './components/myHooks/useStudents'
+// 
 export default function App () {
-  const [n, setN] = useState(0)
-  // 下面的代码就属于副作用操作
-  // document.title = `计数器:${n}`
-
-  useEffect(() => {
-    document.title = `计数器:${n}`
-  })
+  const students = useAllStudents();
+  console.log(students)
   return (
     <div>
-      <span>{n}</span>
-      <button onClick={() => {
-        setN(n + 1)
-      }}>加一</button>
     </div>
   )
 }
