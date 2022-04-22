@@ -1,60 +1,85 @@
-import React, { PureComponent, useCallback, useState } from 'react'
+import React, { PureComponent, useCallback, useMemo, useState } from 'react'
 
-class Test extends PureComponent {
-  render() {
-    console.log('Test render')
-    return (
-      <div>
-        <h1>{this.props.text}</h1>
-        <button onClick={() => {
-          this.props.click()
-          // this.props.click()
-          // 这里传递123 的时候由于 useState里面会使用Object.is进行判断
-          // 那么 新旧数据相等不会触发useState的去修改数据，就不会导致重新渲染
-        }}>改变文本</button>
-      </div>
-    )
-  }
-}
+// class Test extends PureComponent {
+//   render() {
+//     console.log('Test render')
+//     return (
+//       <div>
+//         <h1>{this.props.text}</h1>
+//         <button onClick={() => {
+//           this.props.click()
+//         }}>改变文本</button>
+//       </div>
+//     )
+//   }
+// }
 
-function Parent() {
-  console.log('Parent render')
-  const [txt, setTxt] = useState(123)
-  const [n, setN] = useState(0)
-  const handleClick = useCallback(() => {
-    setTxt(Math.random())
-  }, [txt])
-  const handleInputChange = useCallback((value) => {
-    // 这里好像没办法 onChange获取e对象的函数还是每次都是新的
-    setN(value)
-  })
+// function Parent() {
+//   console.log('Parent render')
+//   const [txt, setTxt] = useState(123)
+//   const [n, setN] = useState(0)
+//   // useMemo 第一次运行之后, 记录依赖项, 在依赖项没有改变的时候, 返回之前的数据
+//   // useCallback 是返回之前的函数
+//   const handleClick = useMemo(() => {
+//     return () => {
+//       setTxt(txt + 1)
+//     }
+//   }, [txt])
+
+
+//   return (
+//     <div>
+//       <Test text={txt} click={}/>
+//       <input type="number"  onChange={e => {
+//         handleInputChange(e.target.value)
+//       }} value={n}/>
+
+//     </div>
+//   )
+// }
+
+
+
+function Item(props){
   return (
     <div>
-      <Test text={txt} click={
-        handleClick  
-      }/>
-      {/* <Test text={txt} click={(num) => {
-        setTxt(num)
-      }}/> */}
-      {/* 这里传递的Test 的click函数每次重新渲染都会是一个新的函数,导致组件在数据没有变化的时候重新渲染了 */}
-      <input type="number"  onChange={e => {
-        handleInputChange(e.target.value)
-      }} value={n}/>
-      {/* 这俩个组件都只是改变自己的值,却导致另一个组件也重新渲染了,其主要问题就是在传递的函数上面
-        使用() => {callback} 这种方式每次传递的都是一个新的箭头函数,导致对比失败,触发重新渲染
-      ,可以直接传递函数下去,不使用箭头函数,但是如果数据的变化要自己控制,那么就不行了,
-      使用 useCallback 固定函数引用,同时数据改变控制权又在自己手上
-      */}
+      {props.value}
     </div>
   )
 }
 
-
-
 export default function App () {
+
+  const [range, setRange] = useState({min: 1, max: 10000})
+  const [n, setN] = useState(0)
+
+  const list = useMemo(() => {
+    const list = [];
+    for (let i = range.min; i < range.max; i++) {
+      list.push(<Item key={i} value={i}></Item>)
+    }
+    console.log('list for')
+    return list;
+    // 使用 memo后 ,改变input的值,不会导致list组件被重新渲染了
+  }, [range.min, range.max])
+  // 只要
+
+  // const list = [];
+  // for (let i = 0; i < range.max; i++) {
+  //   console.log('render')
+  //   list.push(<Item key={i} value={i}></Item>)
+  // }
+
   return (
     <div>
-      <Parent />
+      {list}
+      {/* 这里有个大数据组件, 兄弟组件的数据变化, 导致了这个组件全部重新渲染,显然是不行的,
+      使用 Memo 持久化数据,数据没变组件不会重新渲染, 和 callback/state 里面的持久化方案差不多
+      只是针对的类型不同, callback用于持久化函数,memo用于持久化数据
+      */}
+      <input type="number" value={n} onChange={(e) =>{
+        setN(+(e.target.value))
+      }}/>
     </div>
   )
 }
