@@ -8,6 +8,7 @@ export function useAllStudents(){
   useEffect(() => {
     (async () => {
       const stus = await getAllStudents();
+      console.log(stus)
       setStudents(stus)
     })()
   }, [])
