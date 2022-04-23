@@ -1,72 +1,67 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { PureComponent, useRef, useImperativeHandle } from 'react'
 
-// window.arr = []
-// // const inputRef = React.createRef();
 
-// export default function App() {
-//   const inputRef = useRef();
-//   const [n, setN] = useState(0)
-//   window.arr.push(inputRef)
-//   console.log('App render')
-//   return (
-//     <div>
-//       <input type="text" ref={inputRef} />
-//       <button type='button' onClick={() => {
-//         console.log(inputRef.current)
-//       }}>输出ref对象</button>
-//       <div>{n}</div>
-//       <button type='button' onClick={() => {
-//         setN(Math.random())
-//       }}>改变</button>
-//     </div>
-//   )
-// }
+class Test extends PureComponent{
 
-let timer;
-export default function App() {
-  const [n, setN] = useState(10)
-// 如果 这个组件会使用多次,那么就会存在多个timer,就要保证 timer 彼此不会重复
-// 使用 useRef 可以使其每个新的 timer 保留其地址,成为独立的timer
+  method() {
+    console.log('Test method is called')
+  }
 
-  const timerRef = useRef()
-  useEffect(() => {
-    if(n === 0) return;
-    timerRef.current = setTimeout(() => {
-      setN(n - 1);
-    }, 1000)
-    return () => {
-      clearTimeout(timerRef.current);
+  render() {
+    return (
+      <div>
+        <h1>Test Component</h1>
+      </div>
+    )
+  }
+}
+
+const Test2 = React.forwardRef(Test1)
+// 包装一个ref转发
+
+function Test1 (props, ref) {
+  // 函数组件不存在实例等东西 ,所以不能添加ref
+  // 同时为这个函数组件添加一些方法
+  const Ref = useRef(ref)
+  // 再次转发 ref
+
+  useImperativeHandle(ref, () => {
+    // 为指定 ref 对象 添加方法 返回的
+    // 使用 这个方法会替换掉 current对象
+    // current 指向这个函数返回的对象，不再指向 元素实例
+    // 可以再次转发 获取实例
+    return {
+      method() {
+        console.log('method')
+      },
+      current: Ref
     }
-  }, [n])
-
+  }, [])
+  // 如果不给依赖项，则每次运行函数组件都会调用该方法
+  // 如果使用了依赖项，则第一次调用后，在依赖项没有发生变化时，不会再次调用
   return (
-    <div>
-      {n}
-      <Test />
+    // 获得 元素实例
+    <div ref={Ref}>
+      Test1
     </div>
   )
 }
 
-function Test() {
-  const [n, setN] = useState(10)
-  const nRef = useRef(n)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nRef.current --;
-      setN(nRef.current)
-      if(nRef.current === 0){
-        clearInterval(timer)
-      }
-    }, 1000)
 
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
-
+export default function App() {
+  const testRef = useRef();
+  // 创建一个 ref 对象
   return (
     <div>
-      {nRef.current}
+      {/* <Test ref={testRef} /> */}
+      <Test2 ref={testRef}/>
+      <button onClick={() => {
+        // Test2 传递ref 对象 转发到Test1中 做为第二个参数 在Test1 中接受，绑定到元素上
+        console.log(testRef.current)
+        // 但是在函数组件中 不存在实例方法等东西，那么想要为函数组件添加方法，目前就不行了
+        // ImperativeHandle Hook 就有作用了
+        testRef.current.method()
+      }}>点击调用Test组件的method方法</button>
     </div>
   )
 }
