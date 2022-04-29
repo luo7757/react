@@ -20,6 +20,17 @@ function A(props){
   )
 }
 
+// v5 中 非路由组件使用当前路由信息
+// const WithC = withRouter(C);
+
+// function C(props){
+//   // props中就会有路由信息了 v5
+//   const params = useParams()
+//   return (
+//     <div>日期：{params.year}/{params.month}/{params.day}</div>
+//   )
+// }
+
 function B(props){
   const navigate = useNavigate()
   const params = useParams()
