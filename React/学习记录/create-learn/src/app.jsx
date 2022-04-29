@@ -1,36 +1,24 @@
-import React, { Component } from 'react'
-import { Routes, Route } from 'react-router-dom'
-export default class app extends Component {
-  render() {
-    return (
+import React from 'react'
+import Layout from './components/Layout'
+import Title from './components/Title'
+import Menu from './components/Menu'
+import Main from './components/Main'
+import Login from './pages/Login'
+import { Routes, Route } from 'react-router-dom' 
+
+
+export default function app() {
+  return (
+    <div>
       <Routes>
-        <Route path="/a" element={<A />}></Route>
-        <Route path='/b' element={<B />}></Route>
-        <Route path='/c' element={<C />}></Route>
+        <Route path="*" element={<Layout 
+          title={<Title />} 
+          menu={<Menu />}
+          main={<Main />}
+          ></Layout>} />
+        <Route path="/login" element={<Login />}/>
       </Routes>
-    )
-  }
-}
-function A(){
-  return (
-    <div>
-      mian组件
-    </div>
-  )
-}
-
-function B(){
-  return (
-    <div>
-      组件B
-    </div>
-  )
-}
-
-function C(){
-  return (
-    <div>
-      组件C
+          
     </div>
   )
 }
