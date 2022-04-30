@@ -1,9 +1,9 @@
-module.exports = {
-  devServer: {
-    proxy: {
-      '/api': {
-        target: "open.duyiedu.com"
-      }
-    }
-  }
-}
+// module.exports = {
+//   devServer: {
+//     proxy: {
+//       '/api': {
+//         target: "http://open.duyiedu.com"
+//       }
+//     }
+//   }
+// }
