@@ -1,75 +1,127 @@
-import React from 'react'
-import { Link, Routes, Route } from 'react-router-dom'
+import React, { useEffect } from "react";
+import {
+  Link,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+  useRoutes,
+} from "react-router-dom";
 
 export default function App() {
-  
-  // console.log(useParams())
-  // 问题 实现动态路由配置
-  // User组件 的匹配路径是 /user 但如果规则变化，此时地址栏匹配是 /n 匹配不到子组件
-  // 子组件 以 /user 开头， /n 明显会出问题
-  // 想要子组件的 匹配地址 跟随父级的匹配路径动态修改
-
-  //  /user/* 匹配 /user 开头的路由
-
-  // v5 版本中 路由组件 props属性中的match.url获取当前组件下 匹配通过的组件的 path 值
-  // 显示 test 组件 props.match.url 值为 test
-  // 那么子组件 直接传递一个 参数 过去就可以了
-  
-  // 在 v6 中 推荐写一个配置文件
-  // 这个配置文件也可以动态处理 这里直接写死了
-
-  return (
-    <Routes>
-      {/* <Route path="/n/*" element={<User />}></Route> */}
-      <Route path={`/${routerConfig.user.root}/*`} element={<User />}></Route>
-      {/* <Route path='/test/*' element={<Test />}></Route> */}
-    </Routes>
-  )
+  // 一些页面是需要权限的，在用户没有权限的时候不能进入该页面
+  // 可以封装一个权限鉴定组件 ，该组件在鉴定后，转向失败或成功的对应界面
+  const elements = useRoutes(routes);
+  return elements;
 }
-function User(){
+
+function H() {
   return (
     <div>
-      <h1>User组件固定的区域</h1>
-      <Link to={`/${routerConfig.user.root}/${routerConfig.user.edit}`}>修改用户信息</Link>
-      <Link to={`/${routerConfig.user.root}/${routerConfig.user.pay}`}>充值</Link>
-      <div style={{
-        height: 300,
-        width: 300,
-        backgroundColor: '#bfa',
-        marginTop: 20
-      }}>
-        <Routes>
-          {/* 在 v6 版本中 子组件会自动处理前缀 省去了/user， 在v5 版本中 需要这样写 /user/edit  */}
-          <Route path={`/${routerConfig.user.edit}`} element={<EditUser />}></Route>
-          <Route path={`/${routerConfig.user.pay}`} element={<UserPay />}></Route>
-        </Routes>
+      <ul>
+        <li>
+          <Link to="/">首页</Link>
+        </li>
+        <li>
+          <Link to="/login">登录</Link>
+        </li>
+        <li>
+          <Link to="/admin">个人中心</Link>
+        </li>
+      </ul>
+      <div>
+        <AuthRoute path="/" element={<Home></Home>} />
+        <AuthRoute path="/login" element={<Login></Login>} />
+        <AuthRoute path="/admin" element={<Admin></Admin>} />
       </div>
     </div>
-  )
+  );
 }
 
-function EditUser(){
-  return (
-    <div>修改用户信息</div>
-  )
-}
-
-function UserPay(){
-  return (
-    <div>用户充值</div>
-  )
-}
-
-function Test(){
-  return (
-    <div>Test</div>
-  )
-}
-
-const routerConfig = {
-  user: {
-    root: 'user',
-    pay: 'pay',
-    edit: 'edit'
+function AuthRoute({path, element:Element, children, ...options}){
+  if(user.isLogin){
+    return (
+      <Routes>
+        <Route path={path} element={Element} />
+      </Routes>
+      )
+  }else{
+    return (
+      // <Redirect to="/login" />
+      <div>login</div>
+    )
   }
+}
+
+function Redirect({to}){
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate(to)
+  })
+  return null;
+}
+
+const routes = [
+  {
+    path: "/",
+    element: <H />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
+    ],
+  },
+];
+
+const user = {
+  isLogin: false,
+  login: () => {
+    this.isLogin = !this.isLogin;
+  },
+  loginOut: () => {
+    this.isLogin = !this.isLogin;
+  },
+};
+
+function AppraisalRoute({ path, element: Element, children, ...options }) {
+  const navigate = useNavigate();
+  if (user.isLogin) {
+    // 已经的登录 返回进入登录页之前的页面
+    return navigate("./");
+  } else {
+    // 未登录 转进登录页 携带pathname，方便再次转回触发登录的页面
+    return <div></div>;
+  }
+}
+
+function Home() {
+  return (
+    <div>
+      <h1>首页</h1>
+      <p>任何用户都可以看见</p>
+    </div>
+  );
+}
+function Login() {
+  return (
+    <div>
+      <h1>登录</h1>
+      <p>未登录，请用户登录</p>
+    </div>
+  );
+}
+
+function Admin() {
+  return (
+    <div>
+      <h1>个人中心</h1>
+      <p>看见此页面，说明用户已经登录</p>
+    </div>
+  );
 }
