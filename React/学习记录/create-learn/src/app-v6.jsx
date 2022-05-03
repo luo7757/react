@@ -67,6 +67,7 @@ function Test(){
 }
 
 const routerConfig = {
+  // 这里的匹配只是简单写了一下，如果由children等情况，可以写一个辅助函数，动态生成配置
   user: {
     root: 'user',
     pay: 'pay',
