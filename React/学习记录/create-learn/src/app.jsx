@@ -1,70 +1,76 @@
-import React from 'react'
-import { Switch, Link,  Route } from 'react-router-dom'
-import RouterGruad from './RouterGruad'
+import React, {  } from "react";
+import "./app.css";
+import { NavLink, Switch, Route } from "react-router-dom";
+import { CSSTransition } from 'react-transition-group';
+import CssTransitionGroup from './components/Transition/TransitionGroup'
 
-export default function App(props) {
-
+export default function app() {
   return (
-    <RouterGruad onBeforeChange={(props) => {
-      // 跳转之前运行
-      // 这里提供的全部参数 和 控制权
-      // 如何判断 是否跳转 组件使用者 进行控制
-      if(props.to.pathname === "/page1"){
-        props.commit(false)
-      }else{
-        props.commit(true)
-      }
-    }}
-    onChange={(props) => {
-      // 跳转完成 运行
-    }}
-    >
-       <Link to='/page1'>page1</Link>
-       <Link to='/page2'>page2</Link>
-       <Link to="/">Home</Link>
-       <div>
-         <Switch>
-           <Route path="/" exact component={Home}></Route>
-           <Route path="/page1" exact component={Page1}></Route>
-           <Route path="/page2" exact component={Page2}></Route>
-         </Switch>
-       </div>
-    </RouterGruad>
-  )
-  // return (
-  //   <Router getUserConfirmation={(msg,callBack) => {
-  //     console.log(msg)
-  //     callBack(true)
-  //   }}>
-  //     <Link to='/page1'>page1</Link>
-  //     <Link to='/page2'>page2</Link>
-  //     <Link to="/">Home</Link>
-  //     <div>
-  //       <Switch>
-  //         <Route path="/" exact component={Home}></Route>
-  //         <Route path="/page1" exact component={Page1}></Route>
-  //         <Route path="/page2" exact component={Page2}></Route>
-  //       </Switch>
-  //     </div>
-  //   </Router>
-  // )
+    <div className="app-container">
+      <ul className="menu">
+        <li>
+          <NavLink to="/home">首页</NavLink>
+        </li>
+        <li>
+          <NavLink to="/news">新闻页</NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin">个人中心</NavLink>
+        </li>
+      </ul>
+      <div className="app-content">
+        <CssTransitionGroup  path="/home" exact component={<Home />}/>
+        <CssTransitionGroup  path="/news" exact component={<News />}/>
+        <CssTransitionGroup  path="/admin" exact component={<Admin />}/>
+      </div>
+    </div>
+  );
 }
 
-
-function Home(){
+function Home() {
   return (
-    <h1>Home</h1>
-  )
+    <div style={{
+      backgroundColor: "red",
+      height:300,
+      display:"flex",
+      justifyContent: "center",
+      alignItems: "center", 
+      position:"absolute",
+      width:400
+    }}>
+      <h1>首页</h1>
+    </div>
+  );
 }
 
-function Page1(props){
+function News(){
   return (
-    <h1>Page1</h1>
-  )
+    <div style={{
+      backgroundColor: "yellow",
+      height:300,
+      display:"flex",
+      justifyContent: "center",
+      alignItems: "center",
+      position:"absolute",
+      width:400
+    }}>
+      <h1>新闻页</h1>
+    </div>
+  );
 }
 
-function Page2(){
+function Admin(){
   return (
-    <h1>Page2</h1>
-  )
+    <div style={{
+      backgroundColor: "pink",
+      height:300,
+      display:"flex",
+      justifyContent: "center",
+      alignItems: "center",
+      position:"absolute",
+      width:400
+    }}>
+      <h1>个人中心</h1>
+    </div>
+  );
 }

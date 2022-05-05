@@ -1,0 +1,12 @@
+.app-container{
+  margin: 0 auto;
+  width: 400px;
+}
+
+.menu{
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid;
+  height: 50px;
+  align-items: center;
+}
