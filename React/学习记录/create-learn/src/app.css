@@ -1,12 +1,22 @@
-.app-container{
-  margin: 0 auto;
-  width: 400px;
+.menu{
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
-.menu{
-  display: flex;
-  justify-content: space-around;
+.menu > div{
+  width: 100px;
+  height: 60px;
+  text-align: center;
   border: 1px solid;
-  height: 50px;
-  align-items: center;
+  line-height: 60px;
+}
+.content{
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+  overflow: auto;
+}
+.active{
+  color: red;
 }
