@@ -16,6 +16,6 @@ export default function App() {
 
 function Test({match}) {
   console.log(match)
-  console.log(pathMatch(match.path))
+  console.log(pathMatch(match.path, match.url))
   return <div>Test组件</div>;
 }

@@ -12,7 +12,7 @@ import { pathToRegexp, match, parse, compile } from 'path-to-regexp';
 
 // 这个函数负责将获得的字符串路径 转为一个路径匹配对象
 /**
- * 
+ * @param {string}  path      真实地址
  * @param {string}  pathname  路径正则字符串
  * @param {object} options   路径匹配配置
  * @param {object} return 返回对象
@@ -23,18 +23,14 @@ import { pathToRegexp, match, parse, compile } from 'path-to-regexp';
  *  url: string 实际匹配路径
  * }
  */
-
-
-export default function pathMatch (pathname, options = {}) {
-  const locationPath = window.location.pathname; //实际路径
-
+export default function pathMatch (path, pathname, options = {}) {
   const keys = [];
-  const regexp =  pathToRegexp(pathname, keys, assginOptions(options))  // 创建正则匹配规则
-  const regResult = regexp.exec(locationPath)  
+  const regexp =  pathToRegexp(path, keys, assginOptions(options))  // 创建路径正则匹配规则
+  const regResult = regexp.exec(pathname)  // 传递真实路径， 获取匹配结果
 
-  const result = parse(pathname) // 获取路径 params 参数 对象
-  const Match = match(pathname)  // 创建路径匹配对象
-  const Matchs = Match(locationPath) // 获得匹配结果
+  const result = parse(path) // 传递路径正则 获取路径  params 参数 对象
+  const Match = match(path)  // 传递路径正则 创建路径匹配对象
+  const Matchs = Match(pathname) // 传递真实路径 获得匹配结果
 
   const len = result.length; // 提取参数 用于生产对象
   const params = {}
@@ -46,8 +42,8 @@ export default function pathMatch (pathname, options = {}) {
   return {
     isExact: !!Matchs,
     params,
-    path: pathname,
-    url: locationPath,
+    path: path,
+    url: pathname,
   }
 }
 
