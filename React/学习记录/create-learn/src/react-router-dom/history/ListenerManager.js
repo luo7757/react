@@ -18,8 +18,9 @@ export default class ListenerManager {
   /**
    * 触发函数
    */
-  triggerListener = (history) => {
+  triggerListener = (location, action) => {
     // 参数location 是变化之前的值
-    Array.from(this.listeners.values()).forEach(it => it(history.location, history.action))
+    
+    Array.from(this.listeners.values()).forEach(it => it(location, action))
   }
 }

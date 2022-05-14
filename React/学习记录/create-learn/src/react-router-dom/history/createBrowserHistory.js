@@ -10,13 +10,16 @@ export default function createBrowserHistory(options = {}) {
     keyLength = 6,
     baseName = "",
     forceRefresh = false,
-    getUserConfirmation = (msg, callback) => callback(window.confirm(msg))
+    getUserConfirmation = (msg, prev, next, callback) => callback(window.confirm(msg))
   } = options
 
   let myHistory = {};
+  window.myHistory = myHistory
   // 返回一个浏览器 history 对象
   const blockManger = new Block(getUserConfirmation)
   // 阻塞类
+  const listen = new ListenerManager(myHistory)
+ // 创建监听
 
   if (typeof keyLength !== "number") {
     throw new Error("keyLength can only be anumber")
@@ -95,23 +98,23 @@ export default function createBrowserHistory(options = {}) {
 
   /**
    * 传递监听函数
-   * @param {fn} listen 
    */
-  function addEventListen(listen){
+  function addEventListen(){
+    // popstate方法有个问题就是无法监听用户使用pushState/replaceState方法改变的地址
     window.addEventListener('popstate', () => {
-      listen(myHistory)
-      // 用户每次通过window自带的回退前进功能时，更新myHistory.location对象
       updateLocation()
+      listen.triggerListener(myHistory.location, "POP")
+      // 用户每次通过window自带的回退前进功能时，更新myHistory.location对象
+      // updateLocation()
     })
   }
 
 
   // 创建location 对象
   const location = createLocation(keyLength)
-  // 创建监听
-  const listen = new ListenerManager(myHistory)
+
   // 添加监听运行函数
-  addEventListen(listen.triggerListener)
+  addEventListen()
 
   // 控制函数
   function go(step) {
@@ -154,6 +157,9 @@ export default function createBrowserHistory(options = {}) {
     if (!to) {
       throw new Error('to need string or object')
     }
+    if(to === myHistory.location.pathname){
+      return;
+    }
     const Path = handlePath(to, baseName);  //下一个页面的地址
 
 
@@ -168,7 +174,8 @@ export default function createBrowserHistory(options = {}) {
     // 当前页面信息
     const prev = {location: myHistory.location, action : myHistory.action}
     // 下一个页面信息
-    const next = {location: createNextLocation(Path, state), action: type}
+    const Location =  createNextLocation(Path, state)
+    const next = {location: Location, action: type}
     // const from = {location: nextLocation, }
 
     // 添加阻塞 下面的函数依赖于阻塞的返回结果, 用户调用block函数,即添加阻塞
@@ -180,7 +187,8 @@ export default function createBrowserHistory(options = {}) {
       }else if(type === "REPLACE"){
         window.history.replaceState(state, null, Path)
       }
-
+      // 手动触发 监听函数 去运行地址变化处理函数，从而导致 location 变化
+      listen.triggerListener(Location, type)
       changeAction(myHistory, type)
       updateLocation()
     })

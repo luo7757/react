@@ -42,7 +42,7 @@ export default class Block {
       // 最终的消息不是一个字符串 终止跳转
       return ;
     }
-    this.getUserConfirmation(message, result => {
+    this.getUserConfirmation(message, prev, next, result => {
       result && callback()
     })
   }

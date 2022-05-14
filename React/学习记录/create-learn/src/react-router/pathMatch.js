@@ -25,7 +25,8 @@ import { pathToRegexp, match, parse, compile } from 'path-to-regexp';
  */
 export default function pathMatch (path, pathname, options = {}) {
   const keys = [];
-  const regexp =  pathToRegexp(path, keys, assginOptions(options))  // 创建路径正则匹配规则
+  const ops = assginOptions(options);
+  const regexp =  pathToRegexp(path, keys, ops)  // 创建路径正则匹配规则
   const regResult = regexp.exec(pathname)  // 传递真实路径， 获取匹配结果
 
   const result = parse(path) // 传递路径正则 获取路径  params 参数 对象
@@ -39,6 +40,10 @@ export default function pathMatch (path, pathname, options = {}) {
     params[result[i].name] =  regResult[i]
   }
   // 返回想要的对象格式
+  if(ops.end && path !== pathname){
+    return null
+  }
+  
   return {
     isExact: !!Matchs,
     params,
