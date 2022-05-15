@@ -1,11 +1,11 @@
 // 提供一个 Router 具体实现组件
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import ctx from '../react-router/RouterContext'
 import PropTypes from 'prop-types'
 import pathMatch from '../react-router/pathMatch'
 
-export default class Router extends Component {
+export default class Router extends PureComponent {
   static propTypes = {
     history : PropTypes.object.isRequired,
     children: PropTypes.node
@@ -17,6 +17,7 @@ export default class Router extends Component {
 
 
   componentDidMount(){
+    console.log(this.props.children[0])
     this.unListen = this.props.history.listen((location, action) => {
       this.props.history.action = action;
       this.setState({

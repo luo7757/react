@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ctx from './RouterContext';
 import pathMatch from './pathMatch';
 import PropTypes from 'prop-types'
 
 // 这个组件用于决定 传递的组件在一定条件下是否显示
-export default class Route extends Component {
+export default class Route extends PureComponent {
   static propTypes = {
     path: PropTypes.string,
     exact: PropTypes.bool,

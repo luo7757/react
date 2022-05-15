@@ -4,13 +4,15 @@ import App from "./app";
 import "./assets/css/reset.css";
 import "animate.css";
 import { BrowserRouter } from "./react-router-dom";
-import { Route } from "./react-router";
+import { Route, Switch } from "./react-router";
 
 ReactDOM.render(
   <BrowserRouter>
-    <Route path="/abc" exact component={Abc}></Route>
-    <Route path="/home" exact component={Home}></Route>
-    <Route render={(value) => Change(value)}></Route>
+    <Switch>
+      <Route path="/abc" exact component={Abc}></Route>
+      <Route path="/home" exact component={Home}></Route>
+      <Route render={(value) => Change(value)}></Route>
+    </Switch>
   </BrowserRouter>,
   document.getElementById("root")
 );
