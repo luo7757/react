@@ -17,7 +17,6 @@ export default class Router extends PureComponent {
 
 
   componentDidMount(){
-    console.log(this.props.children[0])
     this.unListen = this.props.history.listen((location, action) => {
       this.props.history.action = action;
       this.setState({

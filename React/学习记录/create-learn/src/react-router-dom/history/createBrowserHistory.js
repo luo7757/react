@@ -160,7 +160,7 @@ export default function createBrowserHistory(options = {}) {
     if(to === myHistory.location.pathname){
       return;
     }
-    const Path = handlePath(to, baseName);  //下一个页面的地址
+    const Path = createHref(to, baseName);  //下一个页面的地址
 
 
     // state 参数问题 每个页面都传递了state，前面的state是否保留，state如果只存在于地址携带的页面中
@@ -223,7 +223,7 @@ export default function createBrowserHistory(options = {}) {
     action: "POP",
     back,
     block: blockManger.block,
-    createHref: to => createHref(to, location, baseName),
+    createHref: to => createHref(to, baseName),
     go,
     forward,
     listen: listen.addListen,
@@ -233,36 +233,7 @@ export default function createBrowserHistory(options = {}) {
   })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ————————————————————————————————独立功能——————————————————————
-/**
- * 完整路径处理函数
- * @param {string or object} to 
- * @param {object} location 
- * @param {string} baseName 
- * @returns 
- */
-function createHref(to = "", location, baseName) {
-  if (!to) {
-    // 没有传递 to，返回 basename + 当前地址
-    return handlePath(location, baseName)
-  }
-  // 传递了to 返回 basename + to
-  return handlePath(to, baseName)
-}
 
 /**
  * action 改变函数
@@ -280,7 +251,7 @@ function changeAction(history, type) {
  * @param {*} baseName 
  * @returns 
  */
-function handlePath(path = "", baseName) {
+function createHref(path = "", baseName) {
   let Path = path;
   // 生成路径
   if (typeof path === "string") {
@@ -289,10 +260,10 @@ function handlePath(path = "", baseName) {
       Path = `/${path}`
     }
   } else if (typeof path === "object") {
-    if (baseName) {
-      Path = `${baseName}/${path.pathname || ""}${path.search || ""}${path.hash || ""}`;
-    }
-    Path = `${path.pathname || ""}${path.search || ""}${path.hash || ""}`;
+    Path = `${path.pathname || ""}${path.search || ""}${path.hash || ""}`
+  }
+  if(baseName){
+    Path = `${baseName}${Path}`
   }
   // 处理结尾多出来的 / 
   if(Path.length === 1){

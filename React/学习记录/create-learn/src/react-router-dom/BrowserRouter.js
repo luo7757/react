@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { createBrowserHistory } from "./history";
 import { Router } from '../react-router'
-import { Switch } from 'react-router-dom'
 // 提供history数据的组件
 // 三个组件 hash/memory/browser 里面的 history 具体实现不同，但返回数据格式一致
 
