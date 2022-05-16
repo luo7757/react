@@ -1,7 +1,6 @@
 import React from 'react';
 import ctx from './RouterContext';
 import Link from './Link';
-import { parsePath } from 'history';
 import pathMatch from './pathMatch';
 import './css/NavLink.css'
 
@@ -18,7 +17,6 @@ export default function NavLink(props) {
     <ctx.Consumer>
       {({location}) => {
         const result = pathMatch(props.to, location.pathname, {exact,strict,sensitive})
-        console.log(result)
         if(!result || !result.isExact){
           return (
             <Link {...rest}></Link>
