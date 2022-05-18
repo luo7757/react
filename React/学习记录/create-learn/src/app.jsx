@@ -1,5 +1,4 @@
 import React from 'react'
-import './Redux/index'
 
 
 export default function app() {
