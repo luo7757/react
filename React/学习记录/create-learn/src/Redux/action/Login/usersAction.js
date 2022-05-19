@@ -9,7 +9,7 @@ export const createAddUserAction = (user = {}) => {
   }
 }
 
-export const createDeleteUserAction = (id = "") => {
+export const createDeleteUserAction = ({id}) => {
   return {
     type: DELETEUSERTYPE,
     payload: {

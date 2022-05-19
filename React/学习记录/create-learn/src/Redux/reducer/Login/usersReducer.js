@@ -1,16 +1,15 @@
 import * as UsersAction from "../../action/Login/usersAction";
 
-const initialState = [];
+let initialState = [];
 
 export default function UsersReducer(state = initialState, { type, payload }) {
-  console.log("user函数运行")
   switch (type) {
     case UsersAction.ADDUSERTYPE:
-      return [...state, payload];
+      return initialState = [...state, payload];
     case UsersAction.DELETEUSERTYPE:
-      return [...state.filter(it => it.id !== payload.id)]
+      return initialState = [...state.filter(it => it.id !== payload.id)]
     case UsersAction.EDITUSERTYPE:
-      return state.map(it => {
+      return initialState = state.map(it => {
         if(it.id === payload.id){
           return {...it, ...payload}
         }

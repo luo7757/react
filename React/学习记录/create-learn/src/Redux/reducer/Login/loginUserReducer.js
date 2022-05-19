@@ -1,14 +1,13 @@
 import * as LoginUserActions from "../../action/Login/loginUserAction";
 
-const initialState = null;
+let initialState = null;
 
 export default function LoginUserReducer (state = initialState, { type, payload }) {
-  console.log("login函数运行")
   switch (type) {
   case LoginUserActions.SETLOGINUSERTYPE:
-    return state = payload;
+    return initialState = payload;
   case LoginUserActions.OUTLOGINUSERTYPE:
-    return state = null;
+    return initialState = null;
   default:
     return state
   }
