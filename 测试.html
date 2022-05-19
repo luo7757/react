@@ -28,7 +28,17 @@
     // }).then(() => {
     //   console.log(6);
     // })
-
+      const obj = {
+        a: "1",
+        b: "2",
+        c: "3"
+      }
+      const newObj = Object.entries(obj).reduce((date, keys) => {
+        console.log(date)
+        date[keys[0]] = keys[1]
+        return date;
+      }, {})
+      console.log(newObj)
   </script>
 </body>
 

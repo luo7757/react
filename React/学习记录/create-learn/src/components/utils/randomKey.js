@@ -4,5 +4,5 @@ export function createKey (keyLength = 6){
 
 export default {
   INIT: (len) => `@@redux/INIT${createKey(len)}`,
-  UNKNOWN: (len) =>  `@@redux/PROBE_UNKNOWN_ACTION${createKey(len)}`,
+  UNKNOWN: (len) =>  `@@redux/PROBE_UNKNOWN_ACTION${createKey(len).split("").join(".")}`,
 } 

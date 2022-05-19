@@ -1,4 +1,5 @@
 import { default as keys } from "../components/utils/randomKey";
+import isPlaneObject from "../components/utils/isPlaneObject";
 
 export default function createStore(reducer, defaultState){
 
@@ -52,11 +53,3 @@ export default function createStore(reducer, defaultState){
     subscribe
   }
 }
-
-function isPlaneObject(obj) {
-  if (typeof obj !== "object") {
-    return false;
-  }
-  return Object.getPrototypeOf(obj) === Object.prototype;
-}
-
