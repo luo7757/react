@@ -28,17 +28,46 @@
     // }).then(() => {
     //   console.log(6);
     // })
-      const obj = {
-        a: "1",
-        b: "2",
-        c: "3"
+      // const obj = {
+      //   a: "1",
+      //   b: "2",
+      //   c: "3"
+      // }
+      // const newObj = Object.entries(obj).reduce((date, keys) => {
+      //   console.log(date)
+      //   date[keys[0]] = keys[1]
+      //   return date;
+      // }, {})
+      // console.log(newObj)
+
+      let config = {
+        alert: setInterval(() => {
+          console.log('alert')
+        }, 1000),
+        time : setTimeout(() => {
+            console.log('time')
+        }, 1000),
+        test: Test(() => {
+          console.log('test')
+        }),
+        Test1: Test1()
       }
-      const newObj = Object.entries(obj).reduce((date, keys) => {
-        console.log(date)
-        date[keys[0]] = keys[1]
-        return date;
-      }, {})
-      console.log(newObj)
+      // config = null;
+      function A(){
+        setInterval(() => {
+          console.log("A")
+        }, 1000)
+      }
+
+    function Test(fn){
+      fn();
+    }
+
+    function Test1(){
+      return "Test1"
+    }
+
+    console.dir(config)
   </script>
 </body>
 

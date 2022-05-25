@@ -7,12 +7,32 @@ import { combine } from '../myRedux/index'
 //  使用手写redux 
 import { createStore, bindActionCreators } from '../myRedux';
 
+import { applyMiddleware } from 'redux';
+
+const Test1 = store => next => action => {
+  console.log('旧数据1', store.getState())
+  next(action)
+  console.log("改变方式1",action)
+  console.log("新数据1", store.getState())
+} 
+
+const Test2 = store => next => action => {
+  console.log('旧数据2', store.getState())
+  next(action)
+  console.log("改变方式2",action)
+  console.log("新数据2", store.getState())
+} 
+
+
+
 
 // const Combine = 
 
+// 通过applyMiddleware 进行中间件绑定
+const store = applyMiddleware(Test1, Test2)(createStore)(combine);
 
 
-const store = createStore(combine);
+// const store = createStore(combine);
 
 const boundActions = bindActionCreators({
   createOutLoginUserAction,
@@ -29,9 +49,9 @@ const boundActions = bindActionCreators({
 // Reducer 函数 在被注册的时候，会运行一次
 
 
-store.subscribe(() => {
-  console.log(store.getState(),"状态改变")
-})
+// store.subscribe(() => {
+//   console.log(store.getState(),"状态改变")
+// })
 
 
 boundActions.createAddUserAction({name:"王刚", id: 3})
