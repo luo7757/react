@@ -11,7 +11,7 @@ export default (...middlewares) => {
       let dispatch = () => { throw new Error("目前不能使用dispatch")} // 在完成中间件注入前，不能使用dispatch
       const simpleStore = {
         getState: store.getState,
-        dispatch: store.dispatch
+        dispatch: (...arg) => dispatch(...arg)
       } // 提取需要的函数
 
       const dispatchProducers = middlewares.map(mid => mid(simpleStore));

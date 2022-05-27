@@ -9,7 +9,8 @@ import { createGetStudentAllAction, createAddUserAction } from './action/Login/u
 import logger from 'redux-logger';
 
 // 副作用处理中间件
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import thunk from '../myRedux-thunk';
 
 
 const store = applyMiddleware(thunk,logger)(createStore)(combine);
