@@ -10,7 +10,7 @@ const appkey = 'demo13_1545210570249';
 
 export async function getAllStudents(){
   return await request({
-    url: '/api/student/findAll',
+    url: `/api/student/findAll?appkey=${appkey}`,
     method: "get"
   })
 }
