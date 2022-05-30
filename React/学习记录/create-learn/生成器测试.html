@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    function* g() {
+      console.log("g 函数第一次运行")
+      let result = yield 3;
+      console.log("g 函数第二次运行", result)
+      return "这是其他生成器返回的数据";
+    }
+
+    function* generator(){
+      console.log("迭代器第一次运行")
+      let result = yield 1;
+      console.log("迭代器第二次运行", result)
+      result = yield* g() // 调用其他生成器 进入该生成器内部执行代码 这个生成器最后的return值，为本次yield值
+      console.log("进入其他生成器内部执行，获得了一个数据", result)
+      result = yield 2;
+      console.log("迭代器第三次运行", result)
+      result = yield 3;
+      console.log("迭代器第四次运行", result)
+      result = yield 4;
+      console.log("迭代器第五次运行", result)
+      return "结束"
+    }  
+    // window.generator = generator()
+    // let result =  window.generator.next();
+    // while(!result.done){
+    //   result = window.generator.next(result.value);
+    //   console.log(result)
+    // }
+
+
+    // 使用生成器解决异步问题
+
+
+    /*
+      创建一个通用生成器运行函数
+      generator : 生成器
+    */
+    function run (generatorFunction, ...arg){
+      let generator = generatorFunction() // 得到一个生成器
+
+      function next(nextValue){
+        let result = generator.next(nextValue) // 传递参数 得到一次迭代结果 
+         // 运行 next 方法得到返回值
+        if(result.done){
+          return;
+        }
+        if(typeof result.value.then === "function"){
+          // 如果是promise 就需要等待完成之后 将获得的返回值，传递给下一次next作为参数
+          result.value.then(data => next(data))
+        }else{
+          // 不是一个promise，直接将本次获得的数据传递作为本次yield的返回值
+         next(result.value)
+        }
+      }
+
+      next()
+    }
+
+
+    function* getDate(...arg){
+      console.log("开始获取数据")
+      let result = yield fetchDate()
+      console.log("获取到的数据", result)
+      result = yield fetchDate()
+      console.log("再次获取数据", result)
+      result = yield 2
+      console.log("最后一次获取数据", result)
+    }
+
+    function fetchDate(){
+      return new Promise((resolve) => {
+        setTimeout(() =>{
+          resolve("用户数据")
+        }, 2000)
+      })
+    }
+
+    run(getDate)
+
+  </script>
+</body>
+</html>
