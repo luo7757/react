@@ -2,6 +2,29 @@ import { all, call, delay, put, take, takeEvery } from 'redux-saga/effects';
 import { countType } from './type'
 import { countAction } from './action'
 
+
+function* Task(){
+  yield all([countTask()])
+}
+// 用于监听的异步action类型 不会在reducer中进行处理 而是由saga触发其他的同步类型action
+function* countTask (){
+  yield takeEvery(countType.ASYNCINCREASE, asyncIncrease)
+  yield takeEvery(countType.ASYNDENCREASE, asyncDecrease)
+  console.log("正在监听")
+}
+
+function* asyncIncrease(){
+  console.log("监听")
+  yield delay(2000)
+  yield put(countAction.increase())
+}
+
+function* asyncDecrease(){
+  yield delay(2000)
+  yield put(countAction.decrease())
+}
+
+
 // 外部run函数 会接收生成器返回的数据
 function* task(){
   console.log("saga执行了")
@@ -49,4 +72,4 @@ function mockStudent(){
 }
 
 
-export default task;
+export default Task;
