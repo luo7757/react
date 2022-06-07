@@ -1,4 +1,4 @@
-import { studentType } from "../../type/inex"
+import { studentType } from "../../type"
 import { createChangeConditionAction } from '../condition/index'
 import { getAllStudents, findStudents } from "../../../components/api/students"
 
@@ -22,6 +22,13 @@ export function createSetStudentCountAction(num) {
     payload: num
   }
 }
+
+export function createAsyncGetStudentsDateAction(){
+  return {
+    type: studentType.ASYNCGETSTUDENTDATE
+  }
+}
+
 
 export function createGetStudentAllAction(){
   return async (dispatch, getState, extra) => {

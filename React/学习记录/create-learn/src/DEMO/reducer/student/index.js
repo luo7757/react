@@ -1,4 +1,4 @@
-import { studentType } from "../../type/inex";
+import { studentType } from "../../type";
 
 let initial = {
   isloading: false,

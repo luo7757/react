@@ -1,4 +1,4 @@
-import { conditionType } from '../../type/inex'
+import { conditionType } from '../../type'
 
 let initial = {
   page: 1,

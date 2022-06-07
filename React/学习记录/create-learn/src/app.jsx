@@ -1,28 +1,34 @@
 import React, { PureComponent } from "react";
 import { Provider, connect } from "react-redux";
 import { countAction } from "./redux-saga/action";
+import { studentAction } from "./DEMO/action";
 
 
 import store from './Redux/index'
 
-const hoc = connect(mapStateToProps, mapDispatchToProps)
+import SearchBar from './conditionRedux'
+import Pager from './PagerRedux'
+import StudentsList from './studentRedux'
+import { render } from "react-dom";
 
 
-export default function app() {
-  // return (
-  //   <div>
-  //     <div>app</div>
-  //     <CounterContainer store={store} Component={Test} />
-  //   </div>
-  // );
-  const Comp = hoc(Test)
-  return (
-    <Provider store={store}>
-      <div>app</div>
-      <Comp />
-    </Provider>
-  )
+export default class App extends PureComponent{
+  componentDidMount(){
+    store.dispatch(studentAction.createAsyncGetStudentsDateAction())
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <SearchBar />
+        <StudentsList />
+        <Pager />
+      </Provider>
+    )
+  }
 }
+
+
 
 function Test(props) {
   // 渲染组件 提供界面

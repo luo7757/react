@@ -1,20 +1,20 @@
-import { all, call, delay, put, take, takeEvery } from 'redux-saga/effects';
+import { all, call, delay, put, select, take, takeEvery } from 'redux-saga/effects';
 import { countType } from './type'
 import { countAction } from './action'
-
+import { studentType } from '../DEMO/type'
+import { studentAction } from '../DEMO/action'
+import { findStudents } from '../components/api/students'
 
 function* Task(){
-  yield all([countTask()])
+  yield all([countTask(), studentTask()])
 }
 // 用于监听的异步action类型 不会在reducer中进行处理 而是由saga触发其他的同步类型action
 function* countTask (){
   yield takeEvery(countType.ASYNCINCREASE, asyncIncrease)
   yield takeEvery(countType.ASYNDENCREASE, asyncDecrease)
-  console.log("正在监听")
 }
 
 function* asyncIncrease(){
-  console.log("监听")
   yield delay(2000)
   yield put(countAction.increase())
 }
@@ -24,52 +24,22 @@ function* asyncDecrease(){
   yield put(countAction.decrease())
 }
 
-
-// 外部run函数 会接收生成器返回的数据
-function* task(){
-  console.log("saga执行了")
-  let data = yield call(mockStudent);
-  console.log(data)
-
-  yield takeEvery(countType.ASYNDENCREASE, decreaseFn)
-
-  yield all([test1(), test2()])
-  // 在all指令数组中的生成器全部完成之前，都会阻塞 下面的代码都不会触发
-  let result = yield take(countType.INCREASE) // 监听一次这个action，监听到了会返回一个完整action
-  console.log("监听到了increase", result) // result 返回的action
-  // 由于yield的存在，在前面的没有没触发的情况下，后面的也不会触发
-  yield take(countType.ASYNCINCREASE)
-  console.log("监听到了asyncincrease")
+function* studentTask(){
+  // 不断监控异步的action，监控到了执行一个生成器函数
+  yield takeEvery(studentType.ASYNCGETSTUDENTDATE, asyncGetStudentDate)
 }
 
-function* decreaseFn(){
-  yield delay(2000) // 延迟 毫秒
-  console.log("takeEvery指令")
-  yield put(countAction.increase()) // dispatch 一个 action
+function* asyncGetStudentDate(){
+  console.log("监控到了")
+  // 收到异步action，开始获取数据
+  const condition = yield select(state => state.condition);
+  // redux-saga中间件中的 select 会获得当前的仓库对象， 接受一个函数，对当前仓库数据进行过滤，得到想要的数据
+  const { count, data } = yield call(findStudents,condition)
+  console.log(count, data)
+  // 通过获得的仓库中保存的查询条件进行异步数据获取
+  yield put(studentAction.createSetStudentDataAction(data))
+  yield put(studentAction.createSetStudentCountAction(count))
+  // 得到异步数据，通过put一个同步action，将数据进行保存
 }
-
-function* test1(){
-  // 直接完成
-  console.log("test1")
-} 
-
-function* test2(){
-  // 等待 DECREASE 触发 才会完成
-  yield take(countType.DECREASE) // take 监听一次 这个action
-}
-
-
-function mockStudent(){
-  return new Promise((resolve,reject) => {
-    setTimeout(() => {
-      if(Math.random() > 0.5){
-        reject(new Error("出错咯"))
-      }else{
-        resolve("数据")
-      }
-    }, 2000)
-  })
-}
-
 
 export default Task;

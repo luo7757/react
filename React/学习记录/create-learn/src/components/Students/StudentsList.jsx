@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function StudentsList(props) {
+  console.log(props)
   const list = props.data.map(s => (
     <tr key={s.id}>
       <td>{s.name}</td>
