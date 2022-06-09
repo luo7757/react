@@ -4,6 +4,7 @@ import Pager from "./components/common/Pager";
 import { studentAction } from './DEMO/action/index'
 
 function mapDispatchToProps(dispatch){
+  // 数据容器
   return {
     onPageChange(page) {
       // 修改当前条件

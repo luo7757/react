@@ -1,93 +1,19 @@
 import React, { PureComponent } from "react";
 import { Provider, connect } from "react-redux";
-import { countAction } from "./redux-saga/action";
-import { studentAction } from "./DEMO/action";
-
-
+import { BrowserRouter } from 'react-router-dom'
 import store from './Redux/index'
-
-import SearchBar from './conditionRedux'
-import Pager from './PagerRedux'
-import StudentsList from './studentRedux'
-import { render } from "react-dom";
-
+import Main from './components/Main'
 
 export default class App extends PureComponent{
-  componentDidMount(){
-    store.dispatch(studentAction.createAsyncGetStudentsDateAction())
-  }
 
   render() {
     return (
-      <Provider store={store}>
-        <SearchBar />
-        <StudentsList />
-        <Pager />
-      </Provider>
+      // <Provider store={store}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      // </Provider>
     )
   }
 }
 
-
-
-function Test(props) {
-  // 渲染组件 提供界面
-  return (
-    <div>
-      <div>数据:{props.number}</div>
-      <div>
-        <button onClick={props.onIncrease}>加</button>
-        <button onClick={props.onDecrease}>减</button>
-        <button onClick={props.onAsyncIncrease}>异步加</button>
-        <button onClick={props.onAsyncDecrease}>异步减</button>
-      </div>
-    </div>
-  )
-}
-
-
-function mapStateToProps (state) {
-  // state 整个仓库的状态 这个函数用于筛选数据
-  return {
-    number: state
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  // 传递一个函数 有两个参数 参数一 dispatch函数，参数二：传递给组件的属性
-  return {
-    onIncrease(...arg){
-      dispatch(countAction.increase(...arg))
-    },
-    onDecrease(...arg){
-      dispatch(countAction.decrease(...arg))
-    },
-    onAsyncIncrease(...arg){
-      dispatch(countAction.asyncIncrease(...arg))
-    },
-    onAsyncDecrease(...arg){
-      dispatch(countAction.asyncDecrease(...arg))
-    }
-  }
-}
-
-class CounterContainer extends PureComponent{
-  // 容器组件 提供数据
-  constructor(props){
-    super(props)
-    this.state = mapStateToProps(props.store.getState())
-    this.dispatch = mapDispatchToProps(props.store.dispatch)
-    props.store.subscribe(() => {
-      this.setState({
-        ...mapStateToProps(props.store)
-      })
-    })
-  }
-
-  render(){
-    const Comp = this.props.Component;
-    return (
-      <Comp {... mapDispatchToProps(this.props.store, this.setState)} {...this.state} />
-    )
-  }
-}
