@@ -40,34 +40,51 @@
       // }, {})
       // console.log(newObj)
 
-      let config = {
-        alert: setInterval(() => {
-          console.log('alert')
-        }, 1000),
-        time : setTimeout(() => {
-            console.log('time')
-        }, 1000),
-        test: Test(() => {
-          console.log('test')
-        }),
-        Test1: Test1()
+    //   let config = {
+    //     alert: setInterval(() => {
+    //       console.log('alert')
+    //     }, 1000),
+    //     time : setTimeout(() => {
+    //         console.log('time')
+    //     }, 1000),
+    //     test: Test(() => {
+    //       console.log('test')
+    //     }),
+    //     Test1: Test1()
+    //   }
+    //   // config = null;
+    //   function A(){
+    //     setInterval(() => {
+    //       console.log("A")
+    //     }, 1000)
+    //   }
+
+    // function Test(fn){
+    //   fn();
+    // }
+
+    // function Test1(){
+    //   return "Test1"
+    // }
+
+    // console.dir(config)
+
+    function A(name){
+      if(name){
+        this.name = name;
       }
-      // config = null;
-      function A(){
-        setInterval(() => {
-          console.log("A")
-        }, 1000)
+    }
+    A.prototype.name = "miaomi"
+    var a = new A()
+    console.log("A", a.name)
+    function B(name){
+      if(name){
+        this.name = name;
       }
-
-    function Test(fn){
-      fn();
     }
-
-    function Test1(){
-      return "Test1"
-    }
-
-    console.dir(config)
+    B.prototype.name = "miaomi"
+    var b = new B()
+    console.log("B", b.name)
   </script>
 </body>
 
