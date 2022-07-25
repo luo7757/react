@@ -13,11 +13,11 @@ const app = dva({
     // 发生错误时， 传递错误对象，及 dispatch 函数用于错误信息处理
     console.log(err.message, disptach)
   },
-  onAction: store => next => action => {
-    // 配置一个redux中间件，当每次action变化时都会运行
-    console.log('onAction执行')
-    next(action)
-  },
+  // onAction: store => next => action => {
+  //   // 配置一个redux中间件，当每次action变化时都会运行
+  //   console.log('onAction执行')
+  //   next(action)
+  // },
   onStateChange: (state) => {
     console.log("onStateChange", state)
   },
@@ -28,6 +28,15 @@ const app = dva({
   }
   
 });
+
+const onAction = store => next => action => {\
+  console.log("添加中间件")
+  next(action)
+}
+
+app.use(onAction)
+
+
 
 // 传入一个函数，该函数返回一个react组件/节点，初始化渲染该节点
 app.router(App)
