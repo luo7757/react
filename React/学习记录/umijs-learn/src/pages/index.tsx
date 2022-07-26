@@ -1,6 +1,6 @@
-import yayJpg from '../assets/yay.jpg';
+import yayJpg from "../assets/yay.jpg";
 
-export default function HomePage(props:any) {
+function HomePage(props:any) {
   return (
     <div>
       <h2>Yay! Welcome to umi!</h2>
@@ -13,3 +13,7 @@ export default function HomePage(props:any) {
     </div>
   );
 }
+
+HomePage.title = "首页"
+
+export default HomePage

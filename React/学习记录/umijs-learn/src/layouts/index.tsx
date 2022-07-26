@@ -1,9 +1,8 @@
-import { Link, Outlet } from "umi";
-import styles from "./index.less";
+import { Link } from "umi";
 
-export default function Layout() {
+export default function Layout(props:any) {
   return (
-    <div className={styles.navs}>
+    <div>
       <nav>
         <ul>
           <li>
@@ -18,7 +17,7 @@ export default function Layout() {
         </ul>
       </nav>
       <header>
-        <Outlet />
+        {props.children}
       </header>
       <footer>页脚</footer>
     </div>
