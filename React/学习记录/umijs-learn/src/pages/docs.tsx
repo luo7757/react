@@ -6,6 +6,6 @@ const DocsPage = () => {
   );
 };
 
-DocsPage.title = "文档"
+// DocsPage.title = "文档"
 
 export default DocsPage;

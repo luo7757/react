@@ -14,6 +14,6 @@ function HomePage(props:any) {
   );
 }
 
-HomePage.title = "首页"
+// HomePage.title = "首页"
 
 export default HomePage

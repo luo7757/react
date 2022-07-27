@@ -4,6 +4,6 @@ function Test(){
   )
 }
 
-Test.title ="测试"
+// Test.title ="测试"
 
 export default Test;

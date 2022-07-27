@@ -14,6 +14,9 @@ export default function Layout(props:any) {
           <li>
             <Link to="/test">Test</Link>
           </li>
+          <li>
+            <Link to="/counter">Counter</Link>
+          </li>
         </ul>
       </nav>
       <header>
