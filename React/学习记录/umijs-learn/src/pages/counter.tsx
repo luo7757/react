@@ -1,7 +1,6 @@
 import { connect } from "umi";
 
 const Conter = (props: any) => {
-  console.log(props)
   return (
     <div>
       <h1>{props.counter}</h1>

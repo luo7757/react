@@ -3,7 +3,6 @@ import styles from '@/assets/css/link.css';
 import globalStyles from '@/global.css';
 
 export default function Layout(props:any) {
-  console.log(styles)
   return (
     <div>
       <nav>
@@ -19,6 +18,9 @@ export default function Layout(props:any) {
           </li>
           <li>
             <NavLink activeClassName={globalStyles.active} to="/counter">Counter</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName={globalStyles.active} to="/student">student</NavLink>
           </li>
         </ul>
       </nav>

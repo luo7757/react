@@ -78,4 +78,11 @@ export default defineConfig({
  dva: {
   // immer: true, //这个插件不建议使用，会改变书写/直觉习惯
  },
+ proxy: {
+  // 代理转发
+  // "/api" : {
+  //   "target": "open.duyiedu.com",
+  //   "changeOrigin": true
+  // }
+ }
 });
