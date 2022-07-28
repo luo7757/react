@@ -1,21 +1,24 @@
-import { Link } from "umi";
+import { NavLink } from "umi";
+import styles from '@/assets/css/link.css';
+import globalStyles from '@/global.css';
 
 export default function Layout(props:any) {
+  console.log(styles)
   return (
     <div>
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink exact activeClassName={styles.active} to="/">Home</NavLink>
           </li>
           <li>
-            <Link to="/docs">Docs</Link>
+            <NavLink activeClassName={styles.active} to="/docs">Docs</NavLink>
           </li>
           <li>
-            <Link to="/test">Test</Link>
+            <NavLink activeClassName={styles.active} to="/test">Test</NavLink>
           </li>
           <li>
-            <Link to="/counter">Counter</Link>
+            <NavLink activeClassName={globalStyles.active} to="/counter">Counter</NavLink>
           </li>
         </ul>
       </nav>
