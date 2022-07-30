@@ -80,9 +80,9 @@ export default defineConfig({
  },
  proxy: {
   // 代理转发
-  // "/api" : {
-  //   "target": "open.duyiedu.com",
-  //   "changeOrigin": true
-  // }
+  "/api" : {
+    "target": "open.duyiedu.com",
+    "changeOrigin": true
+  }
  }
 });
